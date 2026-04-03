@@ -62,6 +62,12 @@ const router = createRouter({
       component: () => import('../views/catImg/ImageBase64View/index.vue'),
       meta: { title: '图片 Base64 编解码' },
     },
+    {
+      path: '/tools/img-compress',
+      name: 'img-compress',
+      component: () => import('../views/catImg/ImageCompressView/index.vue'),
+      meta: { title: '图片压缩' },
+    },
   ],
   scrollBehavior() {
     return { top: 0 }

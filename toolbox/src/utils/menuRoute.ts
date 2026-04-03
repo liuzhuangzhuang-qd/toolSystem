@@ -27,6 +27,7 @@ export function pathToMenuKey(path: string): string {
   if (path === '/notes/soft') return 'notes-soft'
   if (path === '/tools/img-format') return 'cat-img'
   if (path === '/tools/img-base64') return 'cat-img'
+  if (path === '/tools/img-compress') return 'cat-img'
   if (path === '/tools/ai-chat') return 'cat-ai'
   if (path === '/tools/radix-convert') return 'cat-num'
   const m = /^\/category\/([^/]+)$/.exec(path)

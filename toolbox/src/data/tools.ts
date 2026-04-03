@@ -69,7 +69,13 @@ const numTools: ToolCard[] = [
 ]
 
 const imgTools: ToolCard[] = [
-  { title: '图片压缩', desc: '有损/无损压缩，控制体积与画质。', thumb: g(200, 85, 55, 45), icon: '🗜' },
+  {
+    title: '图片压缩',
+    desc: '有损重编码（JPG/WebP）与可选缩放，体积更小。',
+    thumb: g(200, 85, 55, 45),
+    icon: '🗜',
+    routeName: 'img-compress',
+  },
   {
     title: '图片 Base64 编解码',
     desc: '图片与 Base64 之间互转（本地完成，不上传服务器）。',
