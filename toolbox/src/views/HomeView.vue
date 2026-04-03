@@ -5,6 +5,7 @@ import {
   toolCategories,
   HOME_CATEGORY_PREVIEW,
 } from '../data/tools'
+import {onMounted, nextTick} from "vue";
 
 const todayItems = [
   { title: 'Markdown 编辑器', desc: '在线编辑与预览 Markdown', color: '#5c67f2' },
@@ -88,6 +89,13 @@ const latestTools = [
     icon: '📄',
   },
 ]
+onMounted(async () => {
+  console.log('mounted>>>>>>', )
+  await nextTick()
+  // 2. 提取整个页面完整 HTML
+  const fullPageHtml = document.documentElement.outerHTML
+  console.log('完整页面HTML：', fullPageHtml)
+})
 </script>
 
 <template>
@@ -96,7 +104,7 @@ const latestTools = [
       <el-col :xs="24" :md="8" :lg="6" class="stretch-col">
         <el-card shadow="never" class="card-block card-elevated">
           <template #header>
-            <span class="card-title">今日推荐</span>
+            <span class="card-title">今日推荐1</span>
           </template>
           <ul class="today-list">
             <li v-for="(item, i) in todayItems" :key="i" class="today-item">

@@ -29,14 +29,14 @@ const router = createRouter({
     {
       path: '/notes/dev',
       name: 'notes-dev',
-      component: () => import('../views/PlaceholderView.vue'),
-      meta: { title: '开发杂记' },
+      component: () => import('../views/NotesListView.vue'),
+      meta: { title: '开发杂记', noteKind: 'dev' as const },
     },
     {
       path: '/notes/soft',
       name: 'notes-soft',
-      component: () => import('../views/PlaceholderView.vue'),
-      meta: { title: '软件推荐' },
+      component: () => import('../views/NotesListView.vue'),
+      meta: { title: '软件推荐', noteKind: 'soft' as const },
     },
   ],
   scrollBehavior() {
