@@ -14,11 +14,16 @@ type ImageItem = {
 const acceptMime = 'image/png,image/jpeg,image/webp,image/bmp,image/gif'
 const files = ref<ImageItem[]>([])
 const fileInputRef = ref<HTMLInputElement | null>(null)
+const activeId = ref<string | null>(null)
 const targetFormat = ref<TargetFormat>('jpg')
 const converting = ref(false)
 const dragging = ref(false)
 
 const hasFiles = computed(() => files.value.length > 0)
+const activeItem = computed(() => {
+  if (!activeId.value) return null
+  return files.value.find((it) => it.id === activeId.value) ?? null
+})
 
 function handleFiles(list: FileList | null) {
   if (!list || !list.length) return
@@ -42,6 +47,7 @@ function handleFiles(list: FileList | null) {
     if (it.convertedUrl) URL.revokeObjectURL(it.convertedUrl)
   })
   files.value = next
+  activeId.value = next[0]?.id ?? null
 }
 
 function chooseFiles(e: Event) {
@@ -72,6 +78,7 @@ function clearAll() {
     if (it.convertedUrl) URL.revokeObjectURL(it.convertedUrl)
   })
   files.value = []
+  activeId.value = null
 }
 
 function srcNameWithExt(name: string, ext: TargetFormat): string {
@@ -171,6 +178,10 @@ function openFilePicker() {
   fileInputRef.value?.click()
 }
 
+function selectItem(id: string) {
+  activeId.value = id
+}
+
 onBeforeUnmount(() => {
   files.value.forEach((it) => {
     URL.revokeObjectURL(it.previewUrl)
@@ -197,111 +208,102 @@ onBeforeUnmount(() => {
     </header>
 
     <section class="img-format__panel">
-      <div class="img-format__upload">
-        <label
-          class="img-format__drop"
-          :class="{ 'img-format__drop--drag': dragging }"
-          @dragover="onDragOver"
-          @dragleave="onDragLeave"
-          @drop="onDrop"
-        >
-          <input
-            ref="fileInputRef"
-            type="file"
-            class="img-format__file-input"
-            :accept="acceptMime"
-            multiple
-            @change="chooseFiles"
-          />
-          <div class="img-format__drop-inner">
-            <div class="img-format__drop-icon">☁</div>
-            <p class="img-format__drop-main">将图片拖动到此处</p>
-            <p class="img-format__drop-sub">或点击此处打开文件选择图片，支持批量上传</p>
-            <p class="img-format__drop-ext">
-              PNG、JPG、BMP、WEBP、GIF 等格式互相转换，支持批量转换。
-            </p>
-          </div>
-        </label>
-        <div class="img-format__upload-meta">
-          <span>文件数：{{ files.length }}</span>
+      <div class="img-format__toolbar">
+        <div class="img-format__format">
+          <span class="img-format__toolbar-label">转换格式</span>
+          <el-radio-group v-model="targetFormat" :disabled="!hasFiles || converting">
+            <el-radio-button label="jpg">JPG</el-radio-button>
+            <el-radio-button label="png">PNG</el-radio-button>
+            <el-radio-button label="webp">WEBP</el-radio-button>
+            <el-radio-button label="bmp">BMP</el-radio-button>
+            <el-radio-button label="gif">GIF</el-radio-button>
+          </el-radio-group>
         </div>
       </div>
 
-      <div class="img-format__bottom">
-        <div class="img-format__bottom-left">
-          <el-button type="primary" plain @click="openFilePicker">
-            + 添加文件
-          </el-button>
-          <el-button type="danger" plain :disabled="!hasFiles" @click="clearAll">
-            清空列表
-          </el-button>
-        </div>
-        <div class="img-format__bottom-right">
-          <div class="img-format__format">
-            <span class="img-format__toolbar-label">转换格式</span>
-            <el-radio-group v-model="targetFormat" :disabled="!hasFiles || converting">
-              <el-radio-button label="jpg">JPG</el-radio-button>
-              <el-radio-button label="png">PNG</el-radio-button>
-              <el-radio-button label="webp">WEBP</el-radio-button>
-              <el-radio-button label="bmp">BMP</el-radio-button>
-              <el-radio-button label="gif">GIF</el-radio-button>
-            </el-radio-group>
-          </div>
-          <div class="img-format__actions">
-            <el-button
-              type="success"
-              :disabled="!hasFiles"
-              plain
-              @click="downloadAll"
-            >
-              图片打包下载
-            </el-button>
-            <el-button
-              type="primary"
-              :disabled="!hasFiles"
-              :loading="converting"
-              @click="startConvert"
-            >
-              开始转换
-            </el-button>
-          </div>
-        </div>
-      </div>
-
-      <div v-if="hasFiles" class="img-format__list">
-        <div
-          v-for="item in files"
-          :key="item.id"
-          class="img-format__item"
-        >
-          <div class="img-format__thumb-wrap">
-            <img
-              :src="item.previewUrl"
-              alt=""
-              class="img-format__thumb"
+      <div class="img-format__split">
+        <div class="img-format__pane img-format__pane--left">
+          <p class="img-format__pane-title">导入图片</p>
+          <label
+            class="img-format__leftUpload"
+            :class="{ 'img-format__leftUpload--drag': dragging }"
+            @dragover="onDragOver"
+            @dragleave="onDragLeave"
+            @drop="onDrop"
+          >
+            <input
+              ref="fileInputRef"
+              type="file"
+              class="img-format__file-input"
+              :accept="acceptMime"
+              multiple
+              @change="chooseFiles"
             />
-          </div>
-          <div class="img-format__info">
-            <p class="img-format__name" :title="item.file.name">
-              {{ item.file.name }}
-            </p>
-            <p class="img-format__meta">
-              原始：{{ (item.file.size / 1024).toFixed(1) }} KB
-              <span v-if="item.convertedUrl"> · 已生成 {{ targetFormat.toUpperCase() }}</span>
-            </p>
-          </div>
-          <div class="img-format__ops">
-            <el-button
-              size="small"
-              type="primary"
-              text
-              :disabled="!item.convertedUrl"
-              @click="downloadOne(item)"
+            <div v-if="activeItem" class="img-format__previewBox">
+              <img :src="activeItem.previewUrl" alt="" />
+            </div>
+            <div v-else class="img-format__empty-right">
+              <div>
+                <div class="img-format__drop-icon">☁</div>
+                <p class="img-format__drop-main">请先导入图片</p>
+                <p class="img-format__drop-sub">点击或拖拽到此处导入</p>
+              </div>
+            </div>
+          </label>
+
+          <div v-if="hasFiles" class="img-format__thumb-strip">
+            <button
+              v-for="item in files"
+              :key="item.id"
+              class="img-format__thumb-chip"
+              :class="{ 'img-format__thumb-chip--active': item.id === activeId }"
+              @click="selectItem(item.id)"
             >
-              下载
-            </el-button>
+              <img :src="item.previewUrl" alt="" />
+            </button>
           </div>
         </div>
+
+        <div class="img-format__pane img-format__pane--right">
+          <p class="img-format__pane-title">生成图片</p>
+          <div v-if="activeItem?.convertedUrl" class="img-format__previewBox">
+            <img :src="activeItem.convertedUrl" alt="" />
+          </div>
+          <div v-else class="img-format__empty-right">请先开始转换</div>
+        </div>
+      </div>
+
+      <div class="img-format__actions">
+        <el-button type="primary" plain @click="openFilePicker">
+          + 添加文件
+        </el-button>
+        <el-button type="danger" plain :disabled="!hasFiles" @click="clearAll">
+          清空列表
+        </el-button>
+        <el-button
+          type="primary"
+          :disabled="!hasFiles"
+          :loading="converting"
+          @click="startConvert"
+        >
+          开始转换
+        </el-button>
+        <el-button
+          type="success"
+          :disabled="!activeItem?.convertedUrl"
+          plain
+          @click="activeItem && downloadOne(activeItem)"
+        >
+          下载当前
+        </el-button>
+        <el-button
+          type="success"
+          :disabled="!hasFiles"
+          plain
+          @click="downloadAll"
+        >
+          图片打包下载
+        </el-button>
       </div>
     </section>
   </div>
@@ -323,8 +325,8 @@ onBeforeUnmount(() => {
 }
 
 .img-format__intro-card {
-  margin-top: 30px;
-  padding: 20px;
+  margin-top: 20px;
+  padding: 14px 16px;
   border-radius: 10px;
   background: #fff;
   border: 1px solid var(--el-border-color-lighter);
@@ -335,6 +337,7 @@ onBeforeUnmount(() => {
   margin: 0;
   font-size: 16px;
   color: var(--uu-text-secondary);
+  line-height: 1.6;
 }
 
 .img-format__panel {
@@ -348,32 +351,8 @@ onBeforeUnmount(() => {
   gap: 14px;
 }
 
-.img-format__upload {
-  border-radius: 12px;
-  padding: 0;
-  background: transparent;
-}
-
-.img-format__drop {
-  display: block;
-  cursor: pointer;
-}
-
 .img-format__file-input {
   display: none;
-}
-
-.img-format__drop-inner {
-  padding: 40px 16px;
-  border-radius: 10px;
-  border: 1px dashed rgba(148, 163, 184, 0.7);
-  background: #fafafa;
-  text-align: center;
-}
-
-.img-format__drop--drag .img-format__drop-inner {
-  border-color: var(--el-color-primary);
-  background: rgba(79, 70, 229, 0.05);
 }
 
 .img-format__drop-icon {
@@ -390,66 +369,22 @@ onBeforeUnmount(() => {
 }
 
 .img-format__drop-sub {
-  margin: 0 0 2px;
-  font-size: 13px;
-  color: var(--uu-text-secondary);
-}
-
-.img-format__drop-ext {
   margin: 0;
-  font-size: 12px;
-  color: var(--uu-text-secondary);
-}
-
-.img-format__upload-meta {
-  margin-top: 6px;
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  font-size: 12px;
+  font-size: 13px;
   color: var(--uu-text-secondary);
 }
 
 .img-format__toolbar {
   display: flex;
+  gap: 18px;
+  flex-wrap: nowrap;
   align-items: center;
-  flex-wrap: wrap;
-  gap: 10px 14px;
-  font-size: 13px;
+  justify-content: flex-start;
 }
 
 .img-format__toolbar-label {
   font-weight: 500;
   color: var(--uu-text);
-}
-
-.img-format__toolbar-tip {
-  font-size: 12px;
-  color: var(--uu-text-secondary);
-}
-
-.img-format__bottom {
-  margin-top: 10px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 12px;
-  flex-wrap: wrap;
-}
-
-.img-format__bottom-left {
-  display: flex;
-  gap: 8px;
-  flex-wrap: wrap;
-}
-
-.img-format__bottom-right {
-  display: flex;
-  gap: 12px;
-  align-items: center;
-  flex-wrap: wrap;
-  justify-content: flex-end;
-  flex: 1;
 }
 
 .img-format__format {
@@ -458,67 +393,107 @@ onBeforeUnmount(() => {
   gap: 8px;
 }
 
-.img-format__actions {
+.img-format__split {
   display: flex;
-  gap: 8px;
+  gap: 14px;
 }
 
-.img-format__list {
-  border-top: 1px solid var(--el-border-color-lighter);
-  padding-top: 10px;
+.img-format__pane {
   display: flex;
   flex-direction: column;
-  gap: 8px;
-  max-height: 320px;
-  overflow-y: auto;
+  gap: 12px;
+  min-width: 0;
 }
 
-.img-format__item {
-  display: grid;
-  grid-template-columns: auto 1fr auto;
-  gap: 10px 12px;
-  align-items: center;
+.img-format__pane--left,
+.img-format__pane--right {
+  flex: 1;
 }
 
-.img-format__thumb-wrap {
-  width: 60px;
-  height: 60px;
-  border-radius: 10px;
-  overflow: hidden;
-  background: var(--el-fill-color-dark);
+.img-format__pane-title {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--uu-text);
+}
+
+.img-format__leftUpload {
+  display: block;
+  cursor: pointer;
+}
+
+.img-format__leftUpload--drag .img-format__previewBox,
+.img-format__leftUpload--drag .img-format__empty-right {
+  border-color: var(--el-color-primary);
+  background: rgba(79, 70, 229, 0.05);
+}
+
+.img-format__previewBox {
+  border-radius: 12px;
+  background: #f8fafc;
+  border: 1px solid var(--el-border-color-lighter);
+  height: 300px;
   display: flex;
   align-items: center;
   justify-content: center;
+  overflow: hidden;
 }
 
-.img-format__thumb {
+.img-format__previewBox img {
   max-width: 100%;
   max-height: 100%;
   display: block;
 }
 
-.img-format__info {
-  min-width: 0;
-}
-
-.img-format__name {
-  margin: 0 0 2px;
-  font-size: 13px;
-  font-weight: 500;
-  color: var(--uu-text);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.img-format__meta {
-  margin: 0;
-  font-size: 12px;
+.img-format__empty-right {
+  height: 300px;
+  border-radius: 12px;
+  border: 1px dashed rgba(148, 163, 184, 0.8);
+  background: #fafafa;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   color: var(--uu-text-secondary);
+  font-size: 13px;
 }
 
-.img-format__ops {
-  text-align: right;
+.img-format__thumb-strip {
+  display: flex;
+  gap: 10px;
+  overflow-x: auto;
+  padding-bottom: 2px;
+}
+
+.img-format__thumb-chip {
+  width: 56px;
+  height: 56px;
+  border-radius: 10px;
+  padding: 0;
+  border: 1px solid var(--el-border-color-lighter);
+  background: #fff;
+  overflow: hidden;
+  cursor: pointer;
+  flex: 0 0 auto;
+}
+
+.img-format__thumb-chip img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.img-format__thumb-chip--active {
+  border-color: var(--el-color-primary);
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.15);
+}
+
+.img-format__actions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: nowrap;
+  align-items: center;
+  justify-content: flex-end;
 }
 </style>
 

@@ -69,6 +69,18 @@ const router = createRouter({
       meta: { title: '图片压缩' },
     },
     {
+      path: '/tools/img-merge-long',
+      name: 'img-merge-long',
+      component: () => import('../views/catImg/ImageMergeLongView/index.vue'),
+      meta: { title: '合并长图' },
+    },
+    {
+      path: '/tools/img-grid9',
+      name: 'img-grid9',
+      component: () => import('../views/catImg/ImageGrid9View/index.vue'),
+      meta: { title: '九宫格切图' },
+    },
+    {
       path: '/tools/id-card-generate',
       name: 'id-card-generate',
       component: () => import('../views/catDoc/IdCardGenerateView/index.vue'),

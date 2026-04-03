@@ -126,6 +126,7 @@ async function copyOutput() {
         <el-breadcrumb-item :to="{ name: 'category', params: { id: 'cat-num' } }">
           数字工具
         </el-breadcrumb-item>
+        <el-breadcrumb-item>进制转换</el-breadcrumb-item>
       </el-breadcrumb>
 
       <div class="radix-page__intro">
@@ -156,21 +157,42 @@ async function copyOutput() {
         </div>
       </div>
 
-      <div class="radix-input-card__top">
-        <div class="radix-input-card__title">
-          <p class="radix-field__label radix-label--tight">请输入数字：</p>
+      <div class="radix-split">
+        <div class="radix-pane radix-pane--left">
+          <div class="radix-input-card__top">
+            <div class="radix-input-card__title">
+              <p class="radix-field__label radix-label--tight">输入数字（{{ fromBase }} 进制）</p>
+            </div>
+          </div>
+
+          <el-input
+            v-model="inputText"
+            placeholder="例如：-1011、FF、12345678901234567890"
+            :rows="8"
+            type="textarea"
+            resize="none"
+            class="radix-textarea"
+            @keydown.ctrl.enter="doConvert"
+          />
+        </div>
+
+        <div class="radix-pane radix-pane--right">
+          <div class="radix-input-card__top">
+            <div class="radix-input-card__title">
+              <p class="radix-field__label radix-label--tight">输出结果（{{ toBase }} 进制）</p>
+            </div>
+          </div>
+
+          <el-input
+            v-model="outputText"
+            readonly
+            type="textarea"
+            :rows="8"
+            resize="none"
+            class="radix-textarea"
+          />
         </div>
       </div>
-
-      <el-input
-          v-model="inputText"
-          placeholder="例如：-1011、FF、12345678901234567890"
-          :rows="3"
-          type="textarea"
-          resize="none"
-          class="radix-textarea"
-          @keydown.ctrl.enter="doConvert"
-      />
 
       <p v-if="errorText" class="radix-error">{{ errorText }}</p>
       <p class="radix-aux-tip">
@@ -185,24 +207,10 @@ async function copyOutput() {
           <el-button plain :disabled="!inputText.trim()" @click="switchBases">
             交换进制
           </el-button>
-        </div>
-        <div class="radix-bottom__right">
           <el-button type="success" plain :disabled="!outputText" @click="copyOutput">
             复制结果
           </el-button>
         </div>
-      </div>
-
-      <div class="radix-output-card">
-        <p class="radix-field__label">输出结果（{{ toBase }} 进制）</p>
-        <el-input
-          v-model="outputText"
-          readonly
-          type="textarea"
-          :rows="2"
-          resize="none"
-          class="radix-textarea"
-        />
       </div>
     </section>
   </div>
@@ -225,8 +233,8 @@ async function copyOutput() {
 }
 
 .radix-page__intro {
-  margin-top: 30px;
-  padding: 20px;
+  margin-top: 20px;
+  padding: 14px 16px;
   border-radius: 10px;
   background: #fff;
   border: 1px solid var(--el-border-color-lighter);
@@ -244,6 +252,7 @@ async function copyOutput() {
   margin: 0;
   font-size: 16px;
   color: var(--uu-text-secondary);
+  line-height: 1.6;
 }
 
 .radix-panel {
@@ -277,6 +286,19 @@ async function copyOutput() {
 
 .radix-label--tight {
   margin: 0;
+}
+
+.radix-split {
+  display: flex;
+  gap: 14px;
+}
+
+.radix-pane {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
 }
 
 .radix-error {
@@ -337,26 +359,16 @@ async function copyOutput() {
 
 .radix-bottom {
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-end;
   align-items: center;
   gap: 12px;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
 }
 
 .radix-bottom__left {
   display: flex;
   gap: 10px;
-  flex-wrap: wrap;
-}
-
-.radix-bottom__right {
-  display: flex;
-  justify-content: flex-end;
-}
-
-.radix-output-card {
-  padding-top: 6px;
-  border-top: 1px dashed var(--el-border-color-lighter);
+  flex-wrap: nowrap;
 }
 </style>
 

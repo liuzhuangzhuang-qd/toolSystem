@@ -29,6 +29,8 @@ export function pathToMenuKey(path: string): string {
   if (path === '/tools/img-format') return 'cat-img'
   if (path === '/tools/img-base64') return 'cat-img'
   if (path === '/tools/img-compress') return 'cat-img'
+  if (path === '/tools/img-merge-long') return 'cat-img'
+  if (path === '/tools/img-grid9') return 'cat-img'
   if (path === '/tools/ai-chat') return 'cat-ai'
   if (path === '/tools/radix-convert') return 'cat-num'
   if (path === '/tools/id-card-generate') return 'cat-doc'
