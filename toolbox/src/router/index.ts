@@ -44,6 +44,12 @@ const router = createRouter({
       component: () => import('../views/catAi/AiChatView/index.vue'),
       meta: { title: 'AI对话', layout: 'chat' as const },
     },
+    {
+      path: '/tools/img-format',
+      name: 'img-format',
+      component: () => import('../views/catImg/ImageFormatView/index.vue'),
+      meta: { title: '图片格式转换' },
+    },
   ],
   scrollBehavior() {
     return { top: 0 }

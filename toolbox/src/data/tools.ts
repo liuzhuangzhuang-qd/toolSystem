@@ -64,7 +64,13 @@ const numTools: ToolCard[] = [
 
 const imgTools: ToolCard[] = [
   { title: '图片压缩', desc: '有损/无损压缩，控制体积与画质。', thumb: g(200, 85, 55, 45), icon: '🗜' },
-  { title: '格式转换', desc: 'PNG、JPG、WebP、GIF 等格式互转。', thumb: g(250, 75, 58, 48), icon: '🔄' },
+  {
+    title: '格式转换',
+    desc: 'PNG、JPG、WebP 等图片格式互转，浏览器本地完成。',
+    thumb: g(250, 75, 58, 48),
+    icon: '🔄',
+    routeName: 'img-format',
+  },
   { title: '裁剪与旋转', desc: '固定比例裁剪与任意角度旋转。', thumb: g(120, 80, 55, 45), icon: '✂' },
   { title: '水印工具', desc: '文字或图片平铺、单点水印。', thumb: g(210, 70, 55, 45), icon: '💧' },
   { title: '九宫格切图', desc: '一键切朋友圈、微博九宫格。', thumb: g(330, 75, 60, 50), icon: '▦' },
