@@ -1,52 +1,18 @@
-import os from 'node:os'
-import { defineConfig, type Plugin } from 'vite'
+import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
-
-/** 开发时供页面读取：Local URL、局域网 IP（与终端 Network 一致） */
-function devServerInfoPlugin(): Plugin {
-  return {
-    name: 'dev-server-info',
-    configureServer(server) {
-      server.middlewares.use((req, res, next) => {
-        if (req.url?.split('?')[0] !== '/__dev-server-info') {
-          next()
-          return
-        }
-        res.setHeader('Content-Type', 'application/json; charset=utf-8')
-        const port = server.config.server.port ?? 5173
-        const lanIp = getLanIPv4()
-        const localUrl = `http://localhost:${port}/`
-        const networkUrl = lanIp ? `http://${lanIp}:${port}/` : null
-        res.end(
-          JSON.stringify({
-            localUrl,
-            lanIp: lanIp ?? null,
-            networkUrl,
-          }),
-        )
-      })
-    },
-  }
-}
-
-function getLanIPv4(): string | null {
-  const nets = os.networkInterfaces()
-  for (const name of Object.keys(nets)) {
-    for (const net of nets[name] ?? []) {
-      if (net.internal) continue
-      const fam = net.family as string | number
-      if (fam !== 'IPv4' && fam !== 4) continue
-      return net.address
-    }
-  }
-  return null
-}
 
 // https://vite.dev/config/
 export default defineConfig({
-  plugins: [vue(), devServerInfoPlugin()],
+  plugins: [vue()],
   server: {
     host: true,
+    /** 未设置 VITE_API_BASE 时，/api 走代理，默认与 .env 中后端一致 */
+    proxy: {
+      '/api': {
+        target: 'http://116.62.63.9:3030',
+        changeOrigin: true,
+      },
+    },
   },
   build: {
     // 全量引入 element-plus 时单包约 ~950KB（gzip ~300KB），属预期体积

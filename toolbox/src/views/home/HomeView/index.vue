@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import { Right, Document } from '@element-plus/icons-vue'
-import ToolGrid from '../components/ToolGrid.vue'
+import ToolGrid from '../../../components/ToolGrid.vue'
 import {
   toolCategories,
   HOME_CATEGORY_PREVIEW,
-} from '../data/tools'
+} from '../../../data/tools'
 import {onMounted, nextTick} from "vue";
 
 const todayItems = [

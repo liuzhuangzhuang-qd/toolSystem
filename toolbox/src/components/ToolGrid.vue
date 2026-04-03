@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { RouterLink } from 'vue-router'
 import type { ToolCard } from '../data/tools'
 
 defineProps<{
@@ -18,24 +19,40 @@ defineProps<{
       :lg="6"
       class="stretch-col"
     >
-      <el-card shadow="never" class="tool-card card-elevated">
-        <el-tag
-          v-if="showNew"
-          class="badge-new"
-          size="small"
-          effect="plain"
-          type="info"
-          >New</el-tag>
-        <div class="tool-body">
-          <div class="tool-thumb" :style="{ background: tool.thumb }">
-            <span class="tool-emoji">{{ tool.icon }}</span>
+      <component
+        :is="tool.routeName ? RouterLink : 'div'"
+        v-bind="tool.routeName ? { to: { name: tool.routeName } } : {}"
+        class="tool-card-root"
+      >
+        <el-card shadow="never" class="tool-card card-elevated">
+          <el-tag
+            v-if="showNew"
+            class="badge-new"
+            size="small"
+            effect="plain"
+            type="info"
+            >New</el-tag>
+          <div class="tool-body">
+            <div class="tool-thumb" :style="{ background: tool.thumb }">
+              <span class="tool-emoji">{{ tool.icon }}</span>
+            </div>
+            <div class="tool-info">
+              <div class="tool-name">{{ tool.title }}</div>
+              <p class="tool-desc">{{ tool.desc }}</p>
+            </div>
           </div>
-          <div class="tool-info">
-            <div class="tool-name">{{ tool.title }}</div>
-            <p class="tool-desc">{{ tool.desc }}</p>
-          </div>
-        </div>
-      </el-card>
+        </el-card>
+      </component>
     </el-col>
   </el-row>
 </template>
+
+<style scoped>
+.tool-card-root {
+  display: block;
+  height: 100%;
+  text-decoration: none;
+  color: inherit;
+  outline: none;
+}
+</style>

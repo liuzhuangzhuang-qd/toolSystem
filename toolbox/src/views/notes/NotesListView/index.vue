@@ -2,7 +2,7 @@
 import { computed } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { ArrowLeft, Calendar } from '@element-plus/icons-vue'
-import { getNoteArticles } from '../data/noteArticles'
+import { getNoteArticles } from '../../../data/noteArticles'
 
 const route = useRoute()
 const router = useRouter()

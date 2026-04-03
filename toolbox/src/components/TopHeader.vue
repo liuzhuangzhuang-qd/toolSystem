@@ -1,9 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { Search, Moon, Sunny, Bell, Setting } from '@element-plus/icons-vue'
-import { useRuntimeInfo } from '../composables/useRuntimeInfo'
-
-const { localUrl, lanIp, networkUrl, publicIp, loading } = useRuntimeInfo()
 
 const keyword = ref('')
 const isDark = ref(false)
@@ -22,36 +19,7 @@ function onSearch() {
 
 <template>
   <div class="top-header">
-    <div class="header-side header-side--left">
-      <div class="runtime-info" title="开发服务器 Local / 局域网 IP / 公网出口">
-        <span class="runtime-info__seg">
-          <span class="runtime-info__k">Local</span>
-          <a :href="localUrl" class="runtime-info__link" target="_blank" rel="noreferrer">{{
-            localUrl
-          }}</a>
-        </span>
-        <span v-if="lanIp" class="runtime-info__dot" aria-hidden="true">·</span>
-        <span v-if="lanIp" class="runtime-info__seg">
-          <span class="runtime-info__k">IP</span>
-          <span class="runtime-info__val">{{ lanIp }}</span>
-          <a
-            v-if="networkUrl"
-            :href="networkUrl"
-            class="runtime-info__link"
-            target="_blank"
-            rel="noreferrer"
-          >Network</a>
-        </span>
-        <span class="runtime-info__dot" aria-hidden="true">·</span>
-        <span class="runtime-info__seg">
-          <span class="runtime-info__k">公网</span>
-          <span class="runtime-info__val">
-            <template v-if="loading">…</template>
-            <template v-else>{{ publicIp ?? '—' }}</template>
-          </span>
-        </span>
-      </div>
-    </div>
+    <div class="header-side header-side--left" aria-hidden="true" />
     <div class="search-wrap">
       <el-input
         v-model="keyword"
@@ -108,56 +76,6 @@ function onSearch() {
 }
 .header-side {
   min-width: 0;
-}
-.header-side--left {
-  display: flex;
-  align-items: center;
-  min-width: 0;
-}
-.runtime-info {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: baseline;
-  gap: 2px 6px;
-  font-size: 11px;
-  line-height: 1.35;
-  color: var(--el-text-color-secondary, #909399);
-  max-width: 100%;
-  min-width: 0;
-}
-.runtime-info__seg {
-  display: inline-flex;
-  flex-wrap: wrap;
-  align-items: baseline;
-  gap: 3px 6px;
-  min-width: 0;
-}
-.runtime-info__dot {
-  opacity: 0.45;
-  user-select: none;
-}
-.runtime-info__k {
-  flex-shrink: 0;
-  font-weight: 600;
-  color: var(--uu-text-secondary, #909399);
-}
-.runtime-info__k::after {
-  content: ':';
-  margin-left: 1px;
-  font-weight: 500;
-}
-.runtime-info__val {
-  color: var(--uu-text, #303133);
-  font-variant-numeric: tabular-nums;
-  word-break: break-all;
-}
-.runtime-info__link {
-  color: var(--el-color-primary, #5c67f2);
-  text-decoration: none;
-  font-weight: 500;
-}
-.runtime-info__link:hover {
-  text-decoration: underline;
 }
 .header-side--right {
   display: flex;

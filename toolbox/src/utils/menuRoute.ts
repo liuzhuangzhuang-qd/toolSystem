@@ -25,6 +25,7 @@ export function pathToMenuKey(path: string): string {
   if (path === '/trending') return 'trending'
   if (path === '/notes/dev') return 'notes-dev'
   if (path === '/notes/soft') return 'notes-soft'
+  if (path === '/tools/ai-chat') return 'cat-ai'
   const m = /^\/category\/([^/]+)$/.exec(path)
   if (m?.[1]) return m[1]
   return 'home'

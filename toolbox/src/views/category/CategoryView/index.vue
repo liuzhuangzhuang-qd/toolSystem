@@ -2,8 +2,8 @@
 import { computed } from 'vue'
 import { useRouter } from 'vue-router'
 import { ArrowLeft } from '@element-plus/icons-vue'
-import ToolGrid from '../components/ToolGrid.vue'
-import { getCategoryById } from '../data/tools'
+import ToolGrid from '../../../components/ToolGrid.vue'
+import { getCategoryById } from '../../../data/tools'
 
 const props = defineProps<{
   id: string

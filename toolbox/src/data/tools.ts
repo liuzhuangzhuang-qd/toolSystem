@@ -4,6 +4,8 @@ export type ToolCard = {
   desc: string
   thumb: string
   icon: string
+  /** 有值时卡片可跳转至对应路由 name */
+  routeName?: string
 }
 
 export type ToolCategory = {
@@ -156,6 +158,13 @@ const aiTools: ToolCard[] = [
   { title: '会议纪要润色', desc: '口语化纪要改为书面语。', thumb: g(150, 75, 55, 45), icon: '📝' },
   { title: '面试题生成', desc: '按岗位与难度生成面试题清单。', thumb: g(310, 70, 55, 45), icon: '💼' },
   { title: '提示词优化', desc: '优化 Chat 提示词结构与约束。', thumb: g(270, 85, 58, 48), icon: '🎯' },
+  {
+    title: 'AI对话',
+    desc: '多轮对话、上下文连续，可接入常见大模型（演示占位）。',
+    thumb: g(265, 72, 58, 50),
+    icon: '💬',
+    routeName: 'ai-chat',
+  },
 ]
 
 /** 与侧栏「工具分类」顺序一致 */
