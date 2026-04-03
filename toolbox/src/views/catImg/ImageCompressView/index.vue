@@ -205,15 +205,6 @@ function downloadOne(it: CompressItem) {
   a.click()
 }
 
-function downloadAll() {
-  const ok = items.value.filter((it) => it.compressedUrl)
-  if (!ok.length) {
-    ElMessage.info('请先点击“开始压缩”。')
-    return
-  }
-  ok.forEach((it) => downloadOne(it))
-}
-
 function openFilePicker() {
   fileInputRef.value?.click()
 }

@@ -104,6 +104,55 @@ const imgTools: ToolCard[] = [
   { title: '像素画转换', desc: '将照片转为低分辨率像素风格预览。', thumb: g(310, 75, 55, 45), icon: '🧱' },
 ]
 
+const docTools: ToolCard[] = [
+  {
+    title: '身份证生成',
+    desc: '按身份证校验算法生成 18 位随机身份证（含最后校验位）。',
+    thumb: g(200, 85, 55, 45),
+    icon: '🪪',
+    routeName: 'id-card-generate',
+  },
+  {
+    title: '银行卡生成',
+    desc: '按 Luhn 校验规则生成银行卡号，支持姓名/银行/卡种等参数。',
+    thumb: g(220, 78, 55, 45),
+    icon: '💳',
+    routeName: 'bank-card-generate',
+  },
+  {
+    title: 'VIN码生成',
+    desc: '按 VIN 校验位规则生成 17 位车架号，支持品牌/年份/数量参数。',
+    thumb: g(36, 80, 55, 45),
+    icon: '🚗',
+    routeName: 'vin-generate',
+  },
+  {
+    title: '车牌号生成',
+    desc: '按省份、新能源/普通类型规则生成车牌号，支持数量参数。',
+    thumb: g(210, 75, 52, 42),
+    icon: '🚙',
+    routeName: 'plate-generate',
+  },
+  {
+    title: '证件照片裁剪',
+    desc: '按常见证件尺寸进行裁剪（演示：卡片占位）。',
+    thumb: g(260, 75, 55, 45),
+    icon: '📇',
+  },
+  {
+    title: '证件信息整理',
+    desc: '将证件号/姓名等字段结构化整理（演示：卡片占位）。',
+    thumb: g(210, 85, 58, 48),
+    icon: '🗂',
+  },
+  {
+    title: '证件背景建议',
+    desc: '自动给出背景色/亮度调整建议（演示：卡片占位）。',
+    thumb: g(150, 80, 55, 45),
+    icon: '💡',
+  },
+]
+
 const codeTools: ToolCard[] = [
   { title: 'JSON 格式化', desc: '美化、压缩与 JSON 路径查询。', thumb: g(145, 75, 55, 45), icon: '{}' },
   { title: '正则调试', desc: '实时匹配高亮与替换预览。', thumb: g(280, 70, 55, 45), icon: '.*' },
@@ -197,6 +246,7 @@ export const toolCategories: ToolCategory[] = [
   { id: 'cat-text', title: '文本工具', tools: textTools },
   { id: 'cat-num', title: '数字工具', tools: numTools },
   { id: 'cat-img', title: '图片工具', tools: imgTools },
+  { id: 'cat-doc', title: '证件工具', tools: docTools },
   { id: 'cat-code', title: '编程相关', tools: codeTools },
   { id: 'cat-chart', title: '图表工具', tools: chartTools },
   { id: 'cat-office', title: '办公工具', tools: officeTools },

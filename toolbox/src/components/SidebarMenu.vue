@@ -83,6 +83,10 @@ function onMenuSelect(index: string) {
           <el-icon><Picture /></el-icon>
           <template #title>图片工具</template>
         </el-menu-item>
+        <el-menu-item index="cat-doc">
+          <el-icon><Document /></el-icon>
+          <template #title>证件工具</template>
+        </el-menu-item>
         <el-menu-item index="cat-code">
           <el-icon><Monitor /></el-icon>
           <template #title>编程相关</template>

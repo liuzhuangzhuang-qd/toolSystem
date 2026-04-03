@@ -68,6 +68,30 @@ const router = createRouter({
       component: () => import('../views/catImg/ImageCompressView/index.vue'),
       meta: { title: '图片压缩' },
     },
+    {
+      path: '/tools/id-card-generate',
+      name: 'id-card-generate',
+      component: () => import('../views/catDoc/IdCardGenerateView/index.vue'),
+      meta: { title: '身份证生成' },
+    },
+    {
+      path: '/tools/bank-card-generate',
+      name: 'bank-card-generate',
+      component: () => import('../views/catDoc/BankCardGenerateView/index.vue'),
+      meta: { title: '银行卡生成' },
+    },
+    {
+      path: '/tools/vin-generate',
+      name: 'vin-generate',
+      component: () => import('../views/catDoc/VinGenerateView/index.vue'),
+      meta: { title: 'VIN码生成' },
+    },
+    {
+      path: '/tools/plate-generate',
+      name: 'plate-generate',
+      component: () => import('../views/catDoc/PlateGenerateView/index.vue'),
+      meta: { title: '车牌号生成' },
+    },
   ],
   scrollBehavior() {
     return { top: 0 }

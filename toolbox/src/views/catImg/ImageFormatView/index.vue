@@ -13,6 +13,7 @@ type ImageItem = {
 
 const acceptMime = 'image/png,image/jpeg,image/webp,image/bmp,image/gif'
 const files = ref<ImageItem[]>([])
+const fileInputRef = ref<HTMLInputElement | null>(null)
 const targetFormat = ref<TargetFormat>('jpg')
 const converting = ref(false)
 const dragging = ref(false)
@@ -166,6 +167,10 @@ function downloadAll() {
   ok.forEach((it) => downloadOne(it))
 }
 
+function openFilePicker() {
+  fileInputRef.value?.click()
+}
+
 onBeforeUnmount(() => {
   files.value.forEach((it) => {
     URL.revokeObjectURL(it.previewUrl)
@@ -201,7 +206,7 @@ onBeforeUnmount(() => {
           @drop="onDrop"
         >
           <input
-            ref="fileInput"
+            ref="fileInputRef"
             type="file"
             class="img-format__file-input"
             :accept="acceptMime"
@@ -224,7 +229,7 @@ onBeforeUnmount(() => {
 
       <div class="img-format__bottom">
         <div class="img-format__bottom-left">
-          <el-button type="primary" plain @click="$refs.fileInput?.click()">
+          <el-button type="primary" plain @click="openFilePicker">
             + 添加文件
           </el-button>
           <el-button type="danger" plain :disabled="!hasFiles" @click="clearAll">
