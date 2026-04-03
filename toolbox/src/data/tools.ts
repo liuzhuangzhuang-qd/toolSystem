@@ -46,7 +46,13 @@ const textTools: ToolCard[] = [
 ]
 
 const numTools: ToolCard[] = [
-  { title: '进制转换', desc: '二、八、十、十六进制互转，支持大整数。', thumb: g(210, 80, 55, 45), icon: '🔢' },
+  {
+    title: '进制转换',
+    desc: '二、八、十、十六进制互转，支持大整数（仅支持整数）。',
+    thumb: g(210, 80, 55, 45),
+    icon: '🔢',
+    routeName: 'radix-convert',
+  },
   { title: '质数检测', desc: '判断质数、分解质因数与列出区间内质数。', thumb: g(340, 70, 55, 45), icon: '∑' },
   { title: '随机数生成', desc: '指定范围、小数位与批量随机数。', thumb: g(45, 90, 58, 48), icon: '🎲' },
   { title: '单位换算', desc: '长度、面积、体积、重量等常用单位换算。', thumb: g(190, 75, 55, 45), icon: '⚖' },
@@ -64,6 +70,13 @@ const numTools: ToolCard[] = [
 
 const imgTools: ToolCard[] = [
   { title: '图片压缩', desc: '有损/无损压缩，控制体积与画质。', thumb: g(200, 85, 55, 45), icon: '🗜' },
+  {
+    title: '图片 Base64 编解码',
+    desc: '图片与 Base64 之间互转（本地完成，不上传服务器）。',
+    thumb: g(210, 80, 55, 45),
+    icon: '🔣',
+    routeName: 'img-base64',
+  },
   {
     title: '格式转换',
     desc: 'PNG、JPG、WebP 等图片格式互转，浏览器本地完成。',

@@ -50,6 +50,18 @@ const router = createRouter({
       component: () => import('../views/catImg/ImageFormatView/index.vue'),
       meta: { title: '图片格式转换' },
     },
+    {
+      path: '/tools/radix-convert',
+      name: 'radix-convert',
+      component: () => import('../views/catNum/RadixConvertView/index.vue'),
+      meta: { title: '进制转换' },
+    },
+    {
+      path: '/tools/img-base64',
+      name: 'img-base64',
+      component: () => import('../views/catImg/ImageBase64View/index.vue'),
+      meta: { title: '图片 Base64 编解码' },
+    },
   ],
   scrollBehavior() {
     return { top: 0 }
