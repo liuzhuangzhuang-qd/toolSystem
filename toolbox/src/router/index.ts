@@ -87,6 +87,18 @@ const router = createRouter({
       meta: { title: '九宫格切图' },
     },
     {
+      path: '/tools/text-case-convert',
+      name: 'text-case-convert',
+      component: () => import('../views/catText/TextCaseConvertView/index.vue'),
+      meta: { title: '大小写转换' },
+    },
+    {
+      path: '/tools/img-pixelate',
+      name: 'img-pixelate',
+      component: () => import('../views/catImg/ImagePixelateView/index.vue'),
+      meta: { title: '像素画转换' },
+    },
+    {
       path: '/tools/id-card-generate',
       name: 'id-card-generate',
       component: () => import('../views/catDoc/IdCardGenerateView/index.vue'),

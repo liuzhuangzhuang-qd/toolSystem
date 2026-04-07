@@ -705,7 +705,6 @@ onBeforeUnmount(() => {
 }
 .img-gen__top-row {
   display: flex;
-  //flex-wrap: wrap;
   gap: 14px;
   align-items: flex-start;
 }

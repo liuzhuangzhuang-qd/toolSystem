@@ -31,7 +31,13 @@ const textTools: ToolCard[] = [
   { title: '分割文本', desc: '按换行、空格或自定义分隔符拆分与合并文本。', thumb: g(250, 70, 65, 50), icon: '✂️' },
   { title: '摩斯电码', desc: '中文、英文与摩斯码互转，支持点划与声音节奏。', thumb: g(265, 75, 50, 42), icon: '📡' },
   { title: '文本去重', desc: '去除重复行或重复段落，保留顺序或去重统计。', thumb: g(330, 80, 65, 52), icon: '✨' },
-  { title: '大小写转换', desc: '全大写、全小写、首字母大写、驼峰等多种格式。', thumb: g(200, 85, 55, 45), icon: '🔠' },
+  {
+    title: '大小写转换',
+    desc: '支持全大写/小写、标题/句首、camel/pascal/snake/kebab 等格式。',
+    thumb: g(200, 85, 55, 45),
+    icon: '🔠',
+    routeName: 'text-case-convert',
+  },
   { title: '字数统计', desc: '统计字数、词数、行数与字符数，支持中英文混合。', thumb: g(40, 95, 55, 42), icon: '📊' },
   { title: '行排序', desc: '按字典序、长度或自然排序对多行文本排序。', thumb: g(175, 70, 45, 38), icon: '⇅' },
   { title: '空白整理', desc: '去除多余空行、首尾空格与统一缩进风格。', thumb: g(215, 20, 55, 42), icon: '⬚' },
@@ -70,6 +76,13 @@ const numTools: ToolCard[] = [
 
 const imgTools: ToolCard[] = [
   {
+    title: '图片生成',
+    desc: '按目标体积、纯色或渐变背景与格式（含 JPG/JPEG）生成图片。',
+    thumb: g(95, 78, 60, 48),
+    icon: '🖼',
+    routeName: 'img-generate',
+  },
+  {
     title: '图片压缩',
     desc: '有损重编码（JPG/WebP）与可选缩放，体积更小。',
     thumb: g(200, 85, 55, 45),
@@ -91,21 +104,12 @@ const imgTools: ToolCard[] = [
     routeName: 'img-format',
   },
   {
-    title: '图片生成',
-    desc: '按目标体积、纯色或渐变背景与格式（含 JPG/JPEG）生成图片。',
-    thumb: g(95, 78, 60, 48),
-    icon: '🖼',
-    routeName: 'img-generate',
-  },
-  {
     title: '合并长图',
     desc: '纵向或横向拼接多张图片。',
     thumb: g(180, 75, 55, 45),
     icon: '⫿',
     routeName: 'img-merge-long',
   },
-  { title: '裁剪与旋转', desc: '固定比例裁剪与任意角度旋转。', thumb: g(120, 80, 55, 45), icon: '✂' },
-  { title: '水印工具', desc: '文字或图片平铺、单点水印。', thumb: g(210, 70, 55, 45), icon: '💧' },
   {
     title: '九宫格切图',
     desc: '一键切朋友圈、微博九宫格。',
@@ -113,6 +117,8 @@ const imgTools: ToolCard[] = [
     icon: '▦',
     routeName: 'img-grid9',
   },
+  { title: '裁剪与旋转', desc: '固定比例裁剪与任意角度旋转。', thumb: g(120, 80, 55, 45), icon: '✂' },
+  { title: '水印工具', desc: '文字或图片平铺、单点水印。', thumb: g(210, 70, 55, 45), icon: '💧' },
   { title: '取色与调色', desc: '从图片取色并简单曲线调色。', thumb: g(300, 90, 60, 52), icon: '🎨' },
   { title: '圆角与阴影', desc: '批量生成圆角图与投影效果。', thumb: g(260, 65, 55, 45), icon: '◱' },
   { title: '二维码叠图', desc: '在图片中心嵌入二维码。', thumb: g(140, 80, 55, 45), icon: '▣' },
@@ -120,7 +126,13 @@ const imgTools: ToolCard[] = [
   { title: '图标生成', desc: '从图片生成多尺寸 App 图标。', thumb: g(270, 75, 58, 48), icon: '📱' },
   { title: '动图分解', desc: 'GIF 拆帧与帧编辑。', thumb: g(350, 80, 60, 50), icon: '🎞' },
   { title: '背景移除', desc: '简单抠图与纯色背景替换（演示）。', thumb: g(160, 75, 55, 45), icon: '👤' },
-  { title: '像素画转换', desc: '将照片转为低分辨率像素风格预览。', thumb: g(310, 75, 55, 45), icon: '🧱' },
+  {
+    title: '像素画转换',
+    desc: '将照片转为低分辨率像素风格，可调像素块大小并导出。',
+    thumb: g(310, 75, 55, 45),
+    icon: '🧱',
+    routeName: 'img-pixelate',
+  },
 ]
 
 const docTools: ToolCard[] = [
