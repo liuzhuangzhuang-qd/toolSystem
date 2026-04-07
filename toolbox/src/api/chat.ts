@@ -59,6 +59,8 @@ export class ChatApiError extends Error {
 
 function userFacingMessage(status: number, fallback: string): string {
   if (status === 400) return '消息格式不正确，请检查输入后重试。'
+  if (status === 401) return '鉴权失败：请检查 API Key 或令牌配置。'
+  if (status === 403) return '账号无权限或状态异常（可能欠费/停用），请在阿里云控制台检查账户与模型服务状态。'
   if (status === 503) return '服务暂不可用（未配置密钥或上游异常），请稍后重试。'
   return fallback || `请求失败（${status}）`
 }
@@ -84,10 +86,13 @@ export async function postChat(req: ChatRequestDto): Promise<ChatSuccessData> {
   }
 
   if (!res.ok) {
-    const msg =
-      typeof json.message === 'string' && json.message
-        ? json.message
-        : userFacingMessage(res.status, res.statusText)
+    const rawMsg = typeof json.message === 'string' ? json.message : ''
+    const isAliyunAccountDenied =
+      /access denied, please make sure your account is in good standing/i.test(rawMsg) ||
+      /overdue-payment/i.test(rawMsg)
+    const msg = isAliyunAccountDenied
+      ? '阿里云账号状态异常（可能欠费）。请先在阿里云 Model Studio 完成续费或恢复服务后再重试。'
+      : (rawMsg || userFacingMessage(res.status, res.statusText))
     throw new ChatApiError(res.status, msg, json)
   }
 

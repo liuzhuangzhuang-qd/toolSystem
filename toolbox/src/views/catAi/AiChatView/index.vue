@@ -10,6 +10,7 @@ import {
   type ChatRequestDto,
   type ChatUsage,
 } from '../../../api/chat'
+import { AI_MODEL_OPTIONS } from '../../../constants/aiModels'
 
 type Msg = { id: string; role: 'user' | 'assistant'; content: string }
 
@@ -171,8 +172,7 @@ function onKeydown(e: KeyboardEvent) {
           class="ai-chat__model"
           :disabled="sending"
         >
-          <el-option label="qwen-plus" value="qwen-plus" />
-          <el-option label="qwen-turbo" value="qwen-turbo" />
+          <el-option v-for="item in AI_MODEL_OPTIONS" :key="item.value" :label="item.label" :value="item.value" />
         </el-select>
         <p v-if="lastModel || lastUsage" class="ai-chat__usage">
           <template v-if="lastModel">当前：{{ lastModel }}</template>

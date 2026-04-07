@@ -27,6 +27,8 @@ export function pathToMenuKey(path: string): string {
   if (path === '/notes/dev') return 'notes-dev'
   if (path === '/notes/soft') return 'notes-soft'
   if (path === '/tools/text-case-convert') return 'cat-text'
+  if (path === '/tools/text-deduplicate') return 'cat-text'
+  if (path === '/tools/text-compare') return 'cat-text'
   if (path === '/tools/img-format') return 'cat-img'
   if (path === '/tools/img-generate') return 'cat-img'
   if (path === '/tools/img-base64') return 'cat-img'
@@ -35,6 +37,10 @@ export function pathToMenuKey(path: string): string {
   if (path === '/tools/img-grid9') return 'cat-img'
   if (path === '/tools/img-pixelate') return 'cat-img'
   if (path === '/tools/ai-chat') return 'cat-ai'
+  if (path === '/tools/ai-name-suggest') return 'cat-ai'
+  if (path === '/tools/ai-summary-generate') return 'cat-ai'
+  if (path === '/tools/ai-copy-expand') return 'cat-ai'
+  if (path === '/tools/ai-translate-assistant') return 'cat-ai'
   if (path === '/tools/radix-convert') return 'cat-num'
   if (path === '/tools/id-card-generate') return 'cat-doc'
   if (path === '/tools/bank-card-generate') return 'cat-doc'
@@ -42,6 +48,7 @@ export function pathToMenuKey(path: string): string {
   if (path === '/tools/plate-generate') return 'cat-doc'
   if (path === '/tools/pdf-merge') return 'cat-office'
   if (path === '/tools/pdf-split') return 'cat-office'
+  if (path === '/tools/table-to-csv') return 'cat-office'
   const m = /^\/category\/([^/]+)$/.exec(path)
   if (m?.[1]) return m[1]
   return 'home'

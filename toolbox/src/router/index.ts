@@ -45,6 +45,30 @@ const router = createRouter({
       meta: { title: 'AI对话', layout: 'chat' as const },
     },
     {
+      path: '/tools/ai-name-suggest',
+      name: 'ai-name-suggest',
+      component: () => import('../views/catAi/NameSuggestView/index.vue'),
+      meta: { title: '命名建议' },
+    },
+    {
+      path: '/tools/ai-summary-generate',
+      name: 'ai-summary-generate',
+      component: () => import('../views/catAi/SummaryGenerateView/index.vue'),
+      meta: { title: '摘要生成' },
+    },
+    {
+      path: '/tools/ai-copy-expand',
+      name: 'ai-copy-expand',
+      component: () => import('../views/catAi/CopyExpandView/index.vue'),
+      meta: { title: '文案扩写' },
+    },
+    {
+      path: '/tools/ai-translate-assistant',
+      name: 'ai-translate-assistant',
+      component: () => import('../views/catAi/TranslateAssistantView/index.vue'),
+      meta: { title: '翻译助手' },
+    },
+    {
       path: '/tools/img-format',
       name: 'img-format',
       component: () => import('../views/catImg/ImageFormatView/index.vue'),
@@ -93,6 +117,18 @@ const router = createRouter({
       meta: { title: '大小写转换' },
     },
     {
+      path: '/tools/text-deduplicate',
+      name: 'text-deduplicate',
+      component: () => import('../views/catText/TextDeduplicateView/index.vue'),
+      meta: { title: '文本去重' },
+    },
+    {
+      path: '/tools/text-compare',
+      name: 'text-compare',
+      component: () => import('../views/catText/TextCompareView/index.vue'),
+      meta: { title: '文本对比' },
+    },
+    {
       path: '/tools/img-pixelate',
       name: 'img-pixelate',
       component: () => import('../views/catImg/ImagePixelateView/index.vue'),
@@ -133,6 +169,12 @@ const router = createRouter({
       name: 'pdf-split',
       component: () => import('../views/catOffice/PdfSplitView/index.vue'),
       meta: { title: 'PDF 拆分' },
+    },
+    {
+      path: '/tools/table-to-csv',
+      name: 'table-to-csv',
+      component: () => import('../views/catOffice/TableToCsvView/index.vue'),
+      meta: { title: '表格转 CSV' },
     },
     {
       path: '/tools/life-random-wheel',
