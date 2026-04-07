@@ -37,6 +37,7 @@ export function pathToMenuKey(path: string): string {
   if (path === '/tools/bank-card-generate') return 'cat-doc'
   if (path === '/tools/vin-generate') return 'cat-doc'
   if (path === '/tools/plate-generate') return 'cat-doc'
+  if (path === '/tools/pdf-merge') return 'cat-office'
   const m = /^\/category\/([^/]+)$/.exec(path)
   if (m?.[1]) return m[1]
   return 'home'

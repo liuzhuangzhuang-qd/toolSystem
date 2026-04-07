@@ -104,6 +104,12 @@ const router = createRouter({
       component: () => import('../views/catDoc/PlateGenerateView/index.vue'),
       meta: { title: '车牌号生成' },
     },
+    {
+      path: '/tools/pdf-merge',
+      name: 'pdf-merge',
+      component: () => import('../views/catOffice/PdfMergeView/index.vue'),
+      meta: { title: 'PDF 合并' },
+    },
   ],
   scrollBehavior() {
     return { top: 0 }

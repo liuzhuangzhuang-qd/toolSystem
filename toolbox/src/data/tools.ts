@@ -199,7 +199,13 @@ const chartTools: ToolCard[] = [
 ]
 
 const officeTools: ToolCard[] = [
-  { title: 'PDF 合并', desc: '多个 PDF 合并为一个文件。', thumb: g(0, 75, 55, 45), icon: '📄' },
+  {
+    title: 'PDF 合并',
+    desc: '多个 PDF 合并为一个文件。',
+    thumb: g(0, 75, 55, 45),
+    icon: '📄',
+    routeName: 'pdf-merge',
+  },
   { title: 'PDF 拆分', desc: '按页码或书签拆分 PDF。', thumb: g(220, 70, 55, 45), icon: '📑' },
   { title: '表格转 CSV', desc: 'Excel 粘贴为 CSV 或反之。', thumb: g(145, 80, 55, 45), icon: ',' },
   { title: '会议计时', desc: '议程倒计时与发言提醒。', thumb: g(40, 85, 55, 45), icon: '⏱' },
