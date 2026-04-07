@@ -27,6 +27,7 @@ export function pathToMenuKey(path: string): string {
   if (path === '/notes/dev') return 'notes-dev'
   if (path === '/notes/soft') return 'notes-soft'
   if (path === '/tools/img-format') return 'cat-img'
+  if (path === '/tools/img-generate') return 'cat-img'
   if (path === '/tools/img-base64') return 'cat-img'
   if (path === '/tools/img-compress') return 'cat-img'
   if (path === '/tools/img-merge-long') return 'cat-img'
@@ -38,6 +39,7 @@ export function pathToMenuKey(path: string): string {
   if (path === '/tools/vin-generate') return 'cat-doc'
   if (path === '/tools/plate-generate') return 'cat-doc'
   if (path === '/tools/pdf-merge') return 'cat-office'
+  if (path === '/tools/pdf-split') return 'cat-office'
   const m = /^\/category\/([^/]+)$/.exec(path)
   if (m?.[1]) return m[1]
   return 'home'

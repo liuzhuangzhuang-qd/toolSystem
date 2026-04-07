@@ -91,6 +91,13 @@ const imgTools: ToolCard[] = [
     routeName: 'img-format',
   },
   {
+    title: '图片生成',
+    desc: '按目标体积、纯色或渐变背景与格式（含 JPG/JPEG）生成图片。',
+    thumb: g(95, 78, 60, 48),
+    icon: '🖼',
+    routeName: 'img-generate',
+  },
+  {
     title: '合并长图',
     desc: '纵向或横向拼接多张图片。',
     thumb: g(180, 75, 55, 45),
@@ -206,7 +213,13 @@ const officeTools: ToolCard[] = [
     icon: '📄',
     routeName: 'pdf-merge',
   },
-  { title: 'PDF 拆分', desc: '按页码或书签拆分 PDF。', thumb: g(220, 70, 55, 45), icon: '📑' },
+  {
+    title: 'PDF 拆分',
+    desc: '按页码范围、固定页数或逐页拆分，多份 ZIP 下载。',
+    thumb: g(220, 70, 55, 45),
+    icon: '📑',
+    routeName: 'pdf-split',
+  },
   { title: '表格转 CSV', desc: 'Excel 粘贴为 CSV 或反之。', thumb: g(145, 80, 55, 45), icon: ',' },
   { title: '会议计时', desc: '议程倒计时与发言提醒。', thumb: g(40, 85, 55, 45), icon: '⏱' },
   { title: '姓名牌生成', desc: '批量生成折叠姓名牌 PDF。', thumb: g(300, 75, 58, 48), icon: '🏷' },
@@ -237,6 +250,13 @@ const lifeTools: ToolCard[] = [
 ]
 
 const aiTools: ToolCard[] = [
+  {
+    title: 'AI对话',
+    desc: '多轮对话、上下文连续，可接入常见大模型（演示占位）。',
+    thumb: g(265, 72, 58, 50),
+    icon: '💬',
+    routeName: 'ai-chat',
+  },
   { title: '文案扩写', desc: '将短句扩展为段落（演示接口）。', thumb: g(280, 75, 58, 48), icon: '✨' },
   { title: '摘要生成', desc: '长文自动摘要要点。', thumb: g(240, 80, 55, 45), icon: '📋' },
   { title: '翻译助手', desc: '多语言互译与术语表（演示）。', thumb: g(200, 85, 58, 48), icon: '🌐' },
@@ -250,13 +270,6 @@ const aiTools: ToolCard[] = [
   { title: '会议纪要润色', desc: '口语化纪要改为书面语。', thumb: g(150, 75, 55, 45), icon: '📝' },
   { title: '面试题生成', desc: '按岗位与难度生成面试题清单。', thumb: g(310, 70, 55, 45), icon: '💼' },
   { title: '提示词优化', desc: '优化 Chat 提示词结构与约束。', thumb: g(270, 85, 58, 48), icon: '🎯' },
-  {
-    title: 'AI对话',
-    desc: '多轮对话、上下文连续，可接入常见大模型（演示占位）。',
-    thumb: g(265, 72, 58, 50),
-    icon: '💬',
-    routeName: 'ai-chat',
-  },
 ]
 
 /** 与侧栏「工具分类」顺序一致 */

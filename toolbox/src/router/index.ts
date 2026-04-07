@@ -51,6 +51,12 @@ const router = createRouter({
       meta: { title: '图片格式转换' },
     },
     {
+      path: '/tools/img-generate',
+      name: 'img-generate',
+      component: () => import('../views/catImg/ImageGenerateView/index.vue'),
+      meta: { title: '图片生成' },
+    },
+    {
       path: '/tools/radix-convert',
       name: 'radix-convert',
       component: () => import('../views/catNum/RadixConvertView/index.vue'),
@@ -109,6 +115,12 @@ const router = createRouter({
       name: 'pdf-merge',
       component: () => import('../views/catOffice/PdfMergeView/index.vue'),
       meta: { title: 'PDF 合并' },
+    },
+    {
+      path: '/tools/pdf-split',
+      name: 'pdf-split',
+      component: () => import('../views/catOffice/PdfSplitView/index.vue'),
+      meta: { title: 'PDF 拆分' },
     },
   ],
   scrollBehavior() {
