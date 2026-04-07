@@ -14,8 +14,6 @@ const options = computed(() =>
     .filter(Boolean),
 )
 
-const segmentSize = computed(() => (options.value.length ? 360 / options.value.length : 0))
-
 const wheelBackground = computed(() => {
   const n = options.value.length
   if (!n) return '#f5f7fa'
