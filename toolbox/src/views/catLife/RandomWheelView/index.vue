@@ -79,8 +79,11 @@ function spinWheel() {
   selectedIndex.value = null
 
   const idx = Math.floor(Math.random() * n)
-  const centerDeg = idx * (360 / n) + (180 / n)
-  const desiredMod = normalize(360 - centerDeg + 90)
+  const seg = 360 / n
+  // conic-gradient(from -90deg): 第 i 扇区中心角（CSS 角度系，0°在正上方，顺时针为正）
+  const segmentCenterCssDeg = -90 + (idx + 0.5) * seg
+  // 让该中心转到正上方指针（0°）：segmentCenter + rotate ≡ 0 (mod 360)
+  const desiredMod = normalize(-segmentCenterCssDeg)
   const currentMod = normalize(rotationDeg.value)
   const alignDelta = normalize(desiredMod - currentMod)
   const turns = 6 + Math.floor(Math.random() * 4)
@@ -171,7 +174,7 @@ function spinWheel() {
 .wheel-wrap { position: relative; width: min(360px, 90%); aspect-ratio: 1 / 1; }
 .wheel-disc { position: relative; width: 100%; height: 100%; border-radius: 50%; border: 2px solid #d8d8d8; box-shadow: inset 0 0 0 1px rgba(15, 23, 42, 0.06); overflow: hidden; }
 .wheel-label { position: absolute; color: #101010; font-weight: 500; line-height: 1.05; pointer-events: none; white-space: pre-line; text-align: center; transform-origin: center center; letter-spacing: 1px; }
-.wheel-pointer { position: absolute; right: -10px; top: 50%; transform: translateY(-50%); width: 0; height: 0; border-top: 10px solid transparent; border-bottom: 10px solid transparent; border-right: 18px solid #ff2e2e; z-index: 3; filter: drop-shadow(0 1px 3px rgba(0, 0, 0, 0.2)); }
+.wheel-pointer { position: absolute; left: 50%; top: -10px; transform: translateX(-50%); width: 0; height: 0; border-left: 10px solid transparent; border-right: 10px solid transparent; border-top: 18px solid #ff2e2e; z-index: 3; filter: drop-shadow(0 1px 3px rgba(0, 0, 0, 0.2)); }
 .wheel-center { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); width: 20px; height: 20px; border-radius: 999px; background: #fff; border: 1px solid #d8d8d8; display: grid; place-items: center; font-size: 0; color: transparent; z-index: 2; box-shadow: none; }
 .wheel-view__result { margin: 0; font-size: 15px; color: var(--uu-text-secondary); }
 .wheel-view__result--active { color: var(--el-color-success); font-weight: 600; }
