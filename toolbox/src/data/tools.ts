@@ -257,7 +257,13 @@ const lifeTools: ToolCard[] = [
   { title: '垃圾分类', desc: '常见物品分类查询（地域规则演示）。', thumb: g(120, 80, 55, 45), icon: '♻' },
   { title: '菜谱份量', desc: '按人数缩放食材用量。', thumb: g(50, 85, 58, 48), icon: '🍳' },
   { title: '旅行清单', desc: '可勾选的出行物品清单。', thumb: g(270, 75, 55, 45), icon: '✈' },
-  { title: '随机决定', desc: '转盘、掷骰子帮你做选择。', thumb: g(290, 80, 60, 52), icon: '🎲' },
+  {
+    title: '随机转盘',
+    desc: '自定义选项后旋转转盘，随机指向其中一项。',
+    thumb: g(290, 80, 60, 52),
+    icon: '🎯',
+    routeName: 'life-random-wheel',
+  },
   { title: '饮水提醒', desc: '按体重估算每日饮水量与提醒。', thumb: g(190, 85, 55, 45), icon: '💧' },
 ]
 

@@ -12,9 +12,14 @@ const props = withDefaults(defineProps<{
 })
 
 const filteredTools = computed(() => {
-  if (props.statusFilter === 'developed') return props.tools.filter((t) => !!t.routeName)
-  if (props.statusFilter === 'undeveloped') return props.tools.filter((t) => !t.routeName)
-  return props.tools
+  const tools = props.statusFilter === 'developed'
+    ? props.tools.filter((t) => !!t.routeName)
+    : props.statusFilter === 'undeveloped'
+      ? props.tools.filter((t) => !t.routeName)
+      : props.tools
+
+  // "全部"列表中默认将已开发工具排在前面，便于优先使用。
+  return [...tools].sort((a, b) => Number(!!b.routeName) - Number(!!a.routeName))
 })
 </script>
 

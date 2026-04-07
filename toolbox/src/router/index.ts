@@ -134,6 +134,12 @@ const router = createRouter({
       component: () => import('../views/catOffice/PdfSplitView/index.vue'),
       meta: { title: 'PDF 拆分' },
     },
+    {
+      path: '/tools/life-random-wheel',
+      name: 'life-random-wheel',
+      component: () => import('../views/catLife/RandomWheelView/index.vue'),
+      meta: { title: '随机转盘' },
+    },
   ],
   scrollBehavior() {
     return { top: 0 }

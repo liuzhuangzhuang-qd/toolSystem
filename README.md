@@ -73,15 +73,41 @@ npm run preview  # 本地预览构建结果
 
 直连后端时，请确保后端已配置 **CORS** 允许你的前端来源；仅使用同源 `/api` 代理时可减少跨域配置负担。
 
-## 主要页面与路由（节选）
+## 功能梳理（按状态）
 
-| 路径 | 说明 |
-|------|------|
-| `/` | 首页 |
-| `/category/:id` | 工具分类详情 |
-| `/notes/dev`、`/notes/soft` | 笔记列表（开发杂记 / 软件推荐） |
-| `/tools/ai-chat` | AI 对话（对接 `POST /api/chat`、`GET /api/health`） |
-| `/latest`、`/trending` | 占位页（建设中） |
+### 已开发
+
+| 模块 | 功能 | 路由 |
+|------|------|------|
+| 基础页面 | 首页 | `/` |
+| 基础页面 | 分类详情 | `/category/:id` |
+| 基础页面 | 笔记列表（开发杂记） | `/notes/dev` |
+| 基础页面 | 笔记列表（软件推荐） | `/notes/soft` |
+| AI 工具 | AI 对话（对接 `POST /api/chat`、`GET /api/health`） | `/tools/ai-chat` |
+| 图片工具 | 图片格式转换 | `/tools/img-format` |
+| 图片工具 | 图片生成 | `/tools/img-generate` |
+| 数字工具 | 进制转换 | `/tools/radix-convert` |
+| 图片工具 | 图片 Base64 编解码 | `/tools/img-base64` |
+| 图片工具 | 图片压缩 | `/tools/img-compress` |
+| 图片工具 | 合并长图 | `/tools/img-merge-long` |
+| 图片工具 | 九宫格切图 | `/tools/img-grid9` |
+| 文本工具 | 大小写转换 | `/tools/text-case-convert` |
+| 图片工具 | 像素画转换 | `/tools/img-pixelate` |
+| 文档工具 | 身份证生成 | `/tools/id-card-generate` |
+| 文档工具 | 银行卡生成 | `/tools/bank-card-generate` |
+| 文档工具 | VIN 码生成 | `/tools/vin-generate` |
+| 文档工具 | 车牌号生成 | `/tools/plate-generate` |
+| 办公工具 | PDF 合并 | `/tools/pdf-merge` |
+| 办公工具 | PDF 拆分 | `/tools/pdf-split` |
+
+### 待开发 / 建设中
+
+| 模块 | 功能 | 路由 |
+|------|------|------|
+| 基础页面 | 最新发布（占位页） | `/latest` |
+| 基础页面 | 热度排行（占位页） | `/trending` |
+
+> 维护规则：后续功能开发完成后，从“待开发 / 建设中”移动到“已开发”列表末尾，按完成时间顺序追加。
 
 AI 对话页使用独立布局（主区域固定高度、消息区滚动、底部输入栏），详见路由 `meta.layout === 'chat'` 与 `App.vue` 中的样式。
 
