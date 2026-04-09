@@ -1,19 +1,61 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
+import { useRouter } from 'vue-router'
+import { ElMessage } from 'element-plus'
 import { Search, Moon, Sunny, Bell, Setting } from '@element-plus/icons-vue'
+import { toolCategories } from '../data/tools'
 
 const keyword = ref('')
 const isDark = ref(false)
+const router = useRouter()
+
+type SearchItem = {
+  value: string
+  routeName: string
+}
+
+const searchableTools = computed<SearchItem[]>(() => {
+  const all = toolCategories.flatMap((category) => category.tools)
+  const onlyDeveloped = all.filter((tool) => !!tool.routeName) as Array<{ title: string; routeName: string }>
+  const unique = new Map<string, SearchItem>()
+  for (const item of onlyDeveloped) {
+    if (!unique.has(item.title)) {
+      unique.set(item.title, { value: item.title, routeName: item.routeName })
+    }
+  }
+  return Array.from(unique.values())
+})
 
 function toggleTheme() {
   isDark.value = !isDark.value
   document.documentElement.classList.toggle('dark', isDark.value)
 }
 
-function onSearch() {
-  if (keyword.value.trim()) {
-    // placeholder
+function fetchSuggestions(queryString: string, cb: (items: SearchItem[]) => void) {
+  const q = queryString.trim().toLowerCase()
+  if (!q) {
+    cb(searchableTools.value.slice(0, 12))
+    return
   }
+  const results = searchableTools.value
+    .filter((item) => item.value.toLowerCase().includes(q))
+    .slice(0, 20)
+  cb(results)
+}
+
+function goToTool(item: SearchItem) {
+  void router.push({ name: item.routeName })
+}
+
+function onSearch() {
+  const q = keyword.value.trim().toLowerCase()
+  if (!q) return
+  const hit = searchableTools.value.find((item) => item.value.toLowerCase().includes(q))
+  if (!hit) {
+    ElMessage.info('未找到匹配的工具名称。')
+    return
+  }
+  goToTool(hit)
 }
 </script>
 
@@ -21,12 +63,14 @@ function onSearch() {
   <div class="top-header">
     <div class="header-side header-side--left" aria-hidden="true" />
     <div class="search-wrap">
-      <el-input
+      <el-autocomplete
         v-model="keyword"
         class="search-input"
-        placeholder="搜索工具、文章..."
+        placeholder="搜索工具名称..."
+        :fetch-suggestions="fetchSuggestions"
         clearable
         @keyup.enter="onSearch"
+        @select="goToTool"
       >
         <template #append>
           <el-button type="primary" class="search-btn" @click="onSearch">
@@ -34,7 +78,7 @@ function onSearch() {
             搜索
           </el-button>
         </template>
-      </el-input>
+      </el-autocomplete>
     </div>
     <div class="header-side header-side--right">
       <div class="actions">

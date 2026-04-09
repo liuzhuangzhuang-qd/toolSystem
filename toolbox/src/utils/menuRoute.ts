@@ -8,7 +8,6 @@ const MENU_TO_PATH: Record<string, string> = {
   'cat-img': '/category/cat-img',
   'cat-doc': '/category/cat-doc',
   'cat-code': '/category/cat-code',
-  'cat-chart': '/category/cat-chart',
   'cat-office': '/category/cat-office',
   'cat-life': '/category/cat-life',
   'cat-ai': '/category/cat-ai',
@@ -41,7 +40,15 @@ export function pathToMenuKey(path: string): string {
   if (path === '/tools/ai-summary-generate') return 'cat-ai'
   if (path === '/tools/ai-copy-expand') return 'cat-ai'
   if (path === '/tools/ai-translate-assistant') return 'cat-ai'
+  if (path === '/tools/crypto-aes') return 'cat-code'
+  if (path === '/tools/crypto-des') return 'cat-code'
+  if (path === '/tools/crypto-rsa') return 'cat-code'
+  if (path === '/tools/crypto-jwt-parse') return 'cat-code'
+  if (path === '/tools/crypto-md5') return 'cat-code'
+  if (path === '/tools/code-url-codec') return 'cat-code'
+  if (path === '/tools/code-base64-codec') return 'cat-code'
   if (path === '/tools/radix-convert') return 'cat-num'
+  if (path === '/tools/num-random-generate') return 'cat-num'
   if (path === '/tools/id-card-generate') return 'cat-doc'
   if (path === '/tools/bank-card-generate') return 'cat-doc'
   if (path === '/tools/vin-generate') return 'cat-doc'

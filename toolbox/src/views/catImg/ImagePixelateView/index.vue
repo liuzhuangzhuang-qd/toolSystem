@@ -12,6 +12,7 @@ const sourceUrl = ref<string | null>(null)
 const pixelUrl = ref<string | null>(null)
 const working = ref(false)
 const dragging = ref(false)
+const renderTaskId = ref(0)
 
 const blockSize = ref(18)
 const outputFormat = ref<OutputFormat>('png')
@@ -52,6 +53,9 @@ async function handleFiles(list: FileList | null) {
     return
   }
 
+  // Invalidate any ongoing render task to avoid stale result overwrite.
+  renderTaskId.value += 1
+  working.value = false
   revokeSource()
   revokeResult()
   sourceFile.value = f
@@ -89,10 +93,12 @@ function mimeForFormat(fmt: OutputFormat): string {
 }
 
 async function makePixel() {
-  if (!sourceUrl.value || working.value) return
+  if (!sourceUrl.value) return
+  const taskId = ++renderTaskId.value
+  const source = sourceUrl.value
   working.value = true
   try {
-    const img = await loadImage(sourceUrl.value)
+    const img = await loadImage(source)
     const w = Math.max(1, img.naturalWidth || img.width)
     const h = Math.max(1, img.naturalHeight || img.height)
     const bs = Math.max(2, Math.floor(blockSize.value || 2))
@@ -125,13 +131,15 @@ async function makePixel() {
       )
     })
 
+    if (taskId !== renderTaskId.value) return
     revokeResult()
     pixelUrl.value = URL.createObjectURL(blob)
   } catch (e) {
+    if (taskId !== renderTaskId.value) return
     console.error(e)
     ElMessage.error('像素画转换失败，请重试。')
   } finally {
-    working.value = false
+    if (taskId === renderTaskId.value) working.value = false
   }
 }
 
@@ -165,6 +173,8 @@ onBeforeUnmount(() => {
     </header>
 
     <section class="img-pixel__panel">
+      <input ref="fileInputRef" type="file" class="img-pixel__file-input" :accept="acceptMime" @change="chooseFile" />
+
       <div class="img-pixel__toolbar">
         <div class="img-pixel__toolbar-group">
           <span class="img-pixel__label">像素块大小</span>
@@ -196,7 +206,6 @@ onBeforeUnmount(() => {
         @dragleave="onDragLeave"
         @drop="onDrop"
       >
-        <input ref="fileInputRef" type="file" class="img-pixel__file-input" :accept="acceptMime" @change="chooseFile" />
         <div class="img-pixel__upload-inner">
           <el-button type="primary" plain @click.stop="openFilePicker">选择图片</el-button>
           <p class="img-pixel__upload-sub">支持拖拽上传，建议使用清晰图片。</p>

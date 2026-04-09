@@ -4,8 +4,8 @@ import ToolGrid from '../../../components/ToolGrid.vue'
 import {
   toolCategories,
   HOME_CATEGORY_PREVIEW,
+  HOME_LATEST_TOOLS,
 } from '../../../data/tools'
-import {onMounted, nextTick} from "vue";
 
 const todayItems = [
   { title: 'Markdown 编辑器', desc: '在线编辑与预览 Markdown', color: '#5c67f2' },
@@ -38,64 +38,7 @@ const carouselItems = [
   },
 ]
 
-/** 最新工具（跨分类精选，带 New 角标） */
-const latestTools = [
-  {
-    title: '在线 PS 精简版',
-    desc: '浏览器内完成常见图片裁剪、调色与导出，无需安装软件。',
-    thumb: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-    icon: '🖼️',
-  },
-  {
-    title: 'AI 换脸体验',
-    desc: '上传照片体验趣味换脸效果，仅供娱乐与学习。',
-    thumb: 'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)',
-    icon: '🎭',
-  },
-  {
-    title: '代码片段分享',
-    desc: '带语法高亮的短链分享，支持多语言与过期时间。',
-    thumb: 'linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)',
-    icon: '📋',
-  },
-  {
-    title: '时间戳转换',
-    desc: 'Unix 时间与本地时间互转，支持时区选择。',
-    thumb: 'linear-gradient(135deg, #fa709a 0%, #fee140 100%)',
-    icon: '⏱️',
-  },
-  {
-    title: '二维码生成',
-    desc: '文本、链接、WiFi 信息一键生成二维码。',
-    thumb: 'linear-gradient(135deg, #a8edea 0%, #fed6e3 100%)',
-    icon: '▣',
-  },
-  {
-    title: 'Base64 编解码',
-    desc: '文本与文件 Base64 互转，支持拖拽上传。',
-    thumb: 'linear-gradient(135deg, #d299c2 0%, #fef9d7 100%)',
-    icon: '🔤',
-  },
-  {
-    title: '颜色取色器',
-    desc: '屏幕取色并复制 HEX / RGB / HSL。',
-    thumb: 'linear-gradient(135deg, #89f7fe 0%, #66a6ff 100%)',
-    icon: '🎨',
-  },
-  {
-    title: 'Markdown 转 PDF',
-    desc: '保留样式的文档导出，适合简历与说明文档。',
-    thumb: 'linear-gradient(135deg, #fbc2eb 0%, #a6c1ee 100%)',
-    icon: '📄',
-  },
-]
-onMounted(async () => {
-  console.log('mounted>>>>>>', )
-  await nextTick()
-  // 2. 提取整个页面完整 HTML
-  const fullPageHtml = document.documentElement.outerHTML
-  console.log('完整页面HTML：', fullPageHtml)
-})
+const latestTools = HOME_LATEST_TOOLS
 </script>
 
 <template>

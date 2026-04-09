@@ -40,22 +40,17 @@ const filteredTools = computed(() => {
         class="tool-card-root"
       >
         <el-card shadow="never" class="tool-card card-elevated">
-          <el-tag
-            v-if="showNew"
-            class="badge-new"
-            size="small"
-            effect="plain"
-            type="info"
-            >New</el-tag>
-          <el-tag
-            class="badge-status"
-            size="small"
-            effect="plain"
-            :type="tool.routeName ? 'success' : 'info'"
-            :class="{ 'badge-status--undeveloped': !tool.routeName }"
-          >
-            {{ tool.routeName ? '已开发' : '暂未开发' }}
-          </el-tag>
+          <div class="tool-badges">
+            <el-tag
+              class="badge-status"
+              size="small"
+              effect="plain"
+              :type="tool.routeName ? 'success' : 'info'"
+              :class="{ 'badge-status--undeveloped': !tool.routeName }"
+            >
+              {{ tool.routeName ? '已开发' : '暂未开发' }}
+            </el-tag>
+          </div>
           <div class="tool-body">
             <div class="tool-thumb" :style="{ background: tool.thumb }">
               <span class="tool-emoji">{{ tool.icon }}</span>
@@ -84,11 +79,21 @@ const filteredTools = computed(() => {
   position: relative;
 }
 
-.badge-status {
+.tool-badges {
   position: absolute;
   top: 8px;
   right: 8px;
   z-index: 2;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: nowrap;
+  white-space: nowrap;
+}
+
+.badge-status {
+  margin: 0;
+  white-space: nowrap;
 }
 
 .badge-status--undeveloped {

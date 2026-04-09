@@ -10,7 +10,6 @@ import {
   DataAnalysis,
   Picture,
   Monitor,
-  PieChart,
   OfficeBuilding,
   Coffee,
   Cpu,
@@ -89,11 +88,7 @@ function onMenuSelect(index: string) {
         </el-menu-item>
         <el-menu-item index="cat-code">
           <el-icon><Monitor /></el-icon>
-          <template #title>编程相关</template>
-        </el-menu-item>
-        <el-menu-item index="cat-chart">
-          <el-icon><PieChart /></el-icon>
-          <template #title>图表工具</template>
+          <template #title>编码工具</template>
         </el-menu-item>
         <el-menu-item index="cat-office">
           <el-icon><OfficeBuilding /></el-icon>

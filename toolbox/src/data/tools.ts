@@ -40,12 +40,9 @@ const textTools: ToolCard[] = [
   },
   { title: '字数统计', desc: '统计字数、词数、行数与字符数，支持中英文混合。', thumb: g(40, 95, 55, 42), icon: '📊' },
   { title: '行排序', desc: '按字典序、长度或自然排序对多行文本排序。', thumb: g(175, 70, 45, 38), icon: '⇅' },
-  { title: '空白整理', desc: '去除多余空行、首尾空格与统一缩进风格。', thumb: g(215, 20, 55, 42), icon: '⬚' },
   { title: 'Unicode 转义', desc: '\\uXXXX 与字符互转，便于复制到代码或 JSON。', thumb: g(280, 75, 60, 48), icon: '∑' },
   { title: '简繁转换', desc: '简体与繁体中文互转，适合文稿与网页内容。', thumb: g(345, 85, 65, 52), icon: '文' },
-  { title: 'Base64 文本', desc: '纯文本与 Base64 互转，无需上传文件。', thumb: g(220, 90, 58, 48), icon: '🔤' },
   { title: '文本对比', desc: '两段文本逐行或逐字对比，高亮差异。', thumb: g(30, 95, 58, 45), icon: '⚖', routeName: 'text-compare' },
-  { title: '行号与引用', desc: '为每行添加序号或引用符号，方便粘贴到文档。', thumb: g(170, 75, 80, 65), icon: '#' },
   { title: '反转文本', desc: '整段反转、按行反转或单词顺序反转。', thumb: g(350, 75, 70, 55), icon: '↩' },
   { title: 'HTML 实体', desc: 'HTML 实体编码与解码，防止 XSS 与乱码。', thumb: g(235, 75, 62, 50), icon: '&' },
   { title: '随机文本', desc: '生成随机字符串、UUID 或占位假文。', thumb: g(290, 80, 70, 55), icon: '🎲' },
@@ -60,7 +57,13 @@ const numTools: ToolCard[] = [
     routeName: 'radix-convert',
   },
   { title: '质数检测', desc: '判断质数、分解质因数与列出区间内质数。', thumb: g(340, 70, 55, 45), icon: '∑' },
-  { title: '随机数生成', desc: '指定范围、小数位与批量随机数。', thumb: g(45, 90, 58, 48), icon: '🎲' },
+  {
+    title: '随机数生成',
+    desc: '指定范围、小数位与批量随机数，支持不重复与排序。',
+    thumb: g(45, 90, 58, 48),
+    icon: '🎲',
+    routeName: 'num-random-generate',
+  },
   { title: '单位换算', desc: '长度、面积、体积、重量等常用单位换算。', thumb: g(190, 75, 55, 45), icon: '⚖' },
   { title: '百分比计算', desc: '增减百分比、占比与复合增长计算。', thumb: g(25, 85, 55, 45), icon: '%' },
   { title: '科学计数', desc: '科学记数法与普通数字互转。', thumb: g(200, 70, 50, 42), icon: 'e' },
@@ -191,30 +194,62 @@ const codeTools: ToolCard[] = [
   { title: 'SQL 格式化', desc: 'SQL 美化与关键字高亮。', thumb: g(200, 65, 50, 42), icon: 'SQL' },
   { title: 'Cron 解析', desc: 'Cron 表达式解析与自然语言说明。', thumb: g(30, 80, 55, 45), icon: '⏰' },
   { title: 'UUID 生成', desc: '批量生成 UUID v4。', thumb: g(220, 90, 58, 48), icon: '🆔' },
-  { title: 'Hash 计算', desc: 'MD5、SHA 系列文件与文本摘要。', thumb: g(260, 75, 55, 45), icon: '#' },
-  { title: 'URL 编解码', desc: 'Query 与路径组件编解码。', thumb: g(210, 80, 55, 45), icon: '🔗' },
-  { title: 'JWT 解析', desc: '仅客户端解析 Payload（勿泄露密钥）。', thumb: g(340, 70, 55, 45), icon: '🎫' },
-  { title: '颜色变量', desc: 'HEX/RGB/HSL 与 CSS 变量互转。', thumb: g(300, 85, 60, 52), icon: '🌈' },
+  {
+    title: 'Base64 编解码',
+    desc: '文本 Base64 编码与解码，支持 URL Safe 变体。',
+    thumb: g(275, 72, 56, 46),
+    icon: '🔤',
+    routeName: 'code-base64-codec',
+  },
+  {
+    title: 'URL 编解码',
+    desc: 'URI 与查询参数编码解码，避免乱码。',
+    thumb: g(220, 80, 55, 45),
+    icon: '🔗',
+    routeName: 'code-url-codec',
+  },
+  { title: 'Unicode 编解码', desc: '\\uXXXX 与字符互转，便于调试接口与日志。', thumb: g(255, 70, 55, 45), icon: '🧩' },
+  {
+    title: 'MD5 计算',
+    desc: '文本与文件 MD5 摘要计算（前端本地）。',
+    thumb: g(330, 70, 55, 45),
+    icon: 'MD5',
+    routeName: 'crypto-md5',
+  },
+  { title: 'SHA 哈希', desc: 'SHA-1 / SHA-256 / SHA-512 摘要计算。', thumb: g(345, 72, 56, 46), icon: '#' },
+  {
+    title: 'AES 加解密',
+    desc: 'AES-GCM 本地加解密，支持 IV 与密文一体化格式。',
+    thumb: g(30, 82, 56, 46),
+    icon: '🔐',
+    routeName: 'crypto-aes',
+  },
+  {
+    title: 'DES 加解密',
+    desc: 'DES-CBC/ECB 本地加解密，密文使用 Base64 表示。',
+    thumb: g(14, 78, 56, 46),
+    icon: '🛡',
+    routeName: 'crypto-des',
+  },
+  {
+    title: 'RSA 加解密',
+    desc: 'RSA-OAEP 本地加解密，支持 PEM 公私钥生成与导入。',
+    thumb: g(265, 78, 56, 46),
+    icon: '🔑',
+    routeName: 'crypto-rsa',
+  },
+  {
+    title: 'JWT 解析',
+    desc: '本地解析 Header/Payload 与时间字段，不上传数据。',
+    thumb: g(200, 72, 55, 45),
+    icon: '🎫',
+    routeName: 'crypto-jwt-parse',
+  },
+  { title: 'Hex/ASCII 转换', desc: '十六进制字节与 ASCII 文本互转。', thumb: g(185, 72, 55, 45), icon: '0x' },
   { title: 'Shell 转义', desc: '字符串在 Bash/PowerShell 中的安全转义。', thumb: g(180, 70, 50, 42), icon: '>_ ' },
   { title: 'Protobuf 预览', desc: '简单 .proto 语法高亮（只读）。', thumb: g(230, 65, 50, 42), icon: 'PB' },
   { title: 'YAML ↔ JSON', desc: 'YAML 与 JSON 互转与校验。', thumb: g(170, 75, 55, 45), icon: '⇄' },
   { title: 'Gitignore 模板', desc: '按语言生成常用 .gitignore 片段。', thumb: g(150, 65, 50, 42), icon: '⎇' },
-]
-
-const chartTools: ToolCard[] = [
-  { title: '折线图', desc: '粘贴表格数据快速生成折线图。', thumb: g(210, 85, 58, 48), icon: '📈' },
-  { title: '柱状图', desc: '分组柱状与堆叠柱状图。', thumb: g(190, 75, 55, 45), icon: '📊' },
-  { title: '饼图', desc: '占比饼图与环形图。', thumb: g(330, 80, 60, 50), icon: '◐' },
-  { title: '散点图', desc: '二维散点与简单回归线。', thumb: g(280, 70, 55, 45), icon: '·' },
-  { title: '雷达图', desc: '多维度能力雷达图。', thumb: g(250, 75, 58, 48), icon: '⬡' },
-  { title: '漏斗图', desc: '转化漏斗各阶段人数。', thumb: g(300, 75, 55, 45), icon: '▽' },
-  { title: '甘特图', desc: '简单项目时间线与里程碑。', thumb: g(45, 70, 55, 45), icon: '▬' },
-  { title: '词云', desc: '根据词频生成词云图。', thumb: g(350, 75, 60, 52), icon: '☁' },
-  { title: '地图热力', desc: '基于行政区或经纬度的热力示意。', thumb: g(200, 80, 55, 45), icon: '🗺' },
-  { title: '表格转图', desc: '将 Markdown 表格渲染为图表。', thumb: g(160, 75, 55, 45), icon: '⊞' },
-  { title: '箱线图', desc: '五数概括与离群点示意。', thumb: g(320, 65, 50, 42), icon: '▬' },
-  { title: '面积图', desc: '堆叠面积与百分比面积。', thumb: g(230, 80, 58, 48), icon: '⌒' },
-  { title: '桑基图', desc: '流量分配与转化路径（简化版）。', thumb: g(270, 70, 55, 45), icon: '⟿' },
 ]
 
 const officeTools: ToolCard[] = [
@@ -296,12 +331,32 @@ export const toolCategories: ToolCategory[] = [
   { id: 'cat-num', title: '数字工具', tools: numTools },
   { id: 'cat-img', title: '图片工具', tools: imgTools },
   { id: 'cat-doc', title: '证件工具', tools: docTools },
-  { id: 'cat-code', title: '编程相关', tools: codeTools },
-  { id: 'cat-chart', title: '图表工具', tools: chartTools },
+  { id: 'cat-code', title: '编码工具', tools: codeTools },
   { id: 'cat-office', title: '办公工具', tools: officeTools },
   { id: 'cat-life', title: '生活工具', tools: lifeTools },
   { id: 'cat-ai', title: 'AI 工具', tools: aiTools },
 ]
+
+const allTools = toolCategories.flatMap((category) => category.tools)
+
+/**
+ * 首页「最新工具」列表（固定 8 个）。
+ * 约定：每新增一个功能时，在这里替换掉任意一个 routeName 即可。
+ */
+export const HOME_LATEST_TOOL_ROUTE_NAMES = [
+  'img-pixelate',
+  'life-random-wheel',
+  'img-grid9',
+  'img-compress',
+  'img-format',
+  'pdf-split',
+  'id-card-generate',
+  'ai-chat',
+] as const
+
+export const HOME_LATEST_TOOLS: ToolCard[] = HOME_LATEST_TOOL_ROUTE_NAMES.map((routeName) =>
+  allTools.find((tool) => tool.routeName === routeName),
+).filter((tool): tool is ToolCard => !!tool)
 
 export function getCategoryById(id: string): ToolCategory | undefined {
   return toolCategories.find((c) => c.id === id)
