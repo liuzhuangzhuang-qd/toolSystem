@@ -177,6 +177,12 @@ const router = createRouter({
       meta: { title: '文本对比' },
     },
     {
+      path: '/tools/text-zh-convert',
+      name: 'text-zh-convert',
+      component: () => import('../views/catText/TextZhConvertView/index.vue'),
+      meta: { title: '简繁转换' },
+    },
+    {
       path: '/tools/img-pixelate',
       name: 'img-pixelate',
       component: () => import('../views/catImg/ImagePixelateView/index.vue'),

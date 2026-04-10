@@ -9,14 +9,18 @@ const ivText = ref('')
 const working = ref(false)
 const errorText = ref<string | null>(null)
 
-function normalizeKey(raw: string): Uint8Array {
-  const bytes = new TextEncoder().encode(raw.trim())
+function toSafeBytes(bytes: Uint8Array): Uint8Array<ArrayBuffer> {
+  return new Uint8Array(bytes)
+}
+
+function normalizeKey(raw: string): Uint8Array<ArrayBuffer> {
+  const bytes = toSafeBytes(new TextEncoder().encode(raw.trim()))
   if (bytes.length === 16 || bytes.length === 24 || bytes.length === 32) return bytes
   throw new Error('密钥长度需为 16 / 24 / 32 字节（对应 AES-128/192/256）。')
 }
 
-function randomIvBytes(): Uint8Array {
-  return crypto.getRandomValues(new Uint8Array(12))
+function randomIvBytes(): Uint8Array<ArrayBuffer> {
+  return toSafeBytes(crypto.getRandomValues(new Uint8Array(12)))
 }
 
 function base64Encode(bytes: Uint8Array): string {
@@ -25,14 +29,14 @@ function base64Encode(bytes: Uint8Array): string {
   return btoa(binary)
 }
 
-function base64Decode(text: string): Uint8Array {
+function base64Decode(text: string): Uint8Array<ArrayBuffer> {
   const binary = atob(text)
   const out = new Uint8Array(binary.length)
   for (let i = 0; i < binary.length; i++) out[i] = binary.charCodeAt(i)
-  return out
+  return toSafeBytes(out)
 }
 
-function parseInputCipher(raw: string): { iv: Uint8Array; cipher: Uint8Array } {
+function parseInputCipher(raw: string): { iv: Uint8Array<ArrayBuffer>; cipher: Uint8Array<ArrayBuffer> } {
   const text = raw.trim()
   const parts = text.split(':')
   if (parts.length !== 2 || !parts[0] || !parts[1]) {
@@ -64,7 +68,7 @@ async function encryptText() {
   try {
     const key = await importKey(secretKey.value)
     const iv = randomIvBytes()
-    const encoded = new TextEncoder().encode(plainText.value)
+    const encoded = toSafeBytes(new TextEncoder().encode(plainText.value))
     const encrypted = await crypto.subtle.encrypt({ name: 'AES-GCM', iv }, key, encoded)
     const cipher = new Uint8Array(encrypted)
 
