@@ -93,6 +93,12 @@ const router = createRouter({
       meta: { title: '随机数生成' },
     },
     {
+      path: '/tools/num-mental-math-pdf',
+      name: 'num-mental-math-pdf',
+      component: () => import('../views/catNum/MentalMathPdfView/index.vue'),
+      meta: { title: '口算题生成' },
+    },
+    {
       path: '/tools/crypto-aes',
       name: 'crypto-aes',
       component: () => import('../views/catCrypto/AesCryptoView/index.vue'),

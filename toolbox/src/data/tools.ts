@@ -70,6 +70,13 @@ const numTools: ToolCard[] = [
     icon: '🎲',
     routeName: 'num-random-generate',
   },
+  {
+    title: '口算题生成',
+    desc: '按加减乘除、数量和最大数生成口算题，并导出 PDF。',
+    thumb: g(18, 88, 56, 46),
+    icon: '📝',
+    routeName: 'num-mental-math-pdf',
+  },
   { title: '单位换算', desc: '长度、面积、体积、重量等常用单位换算。', thumb: g(190, 75, 55, 45), icon: '⚖' },
   { title: '百分比计算', desc: '增减百分比、占比与复合增长计算。', thumb: g(25, 85, 55, 45), icon: '%' },
   { title: '科学计数', desc: '科学记数法与普通数字互转。', thumb: g(200, 70, 50, 42), icon: 'e' },
